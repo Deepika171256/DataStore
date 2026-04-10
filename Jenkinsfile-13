@@ -83,7 +83,7 @@ stage("Docker Image Scan") {
       steps {
         sh """
           echo "-------- Scanning Docker Image --------"
-          trivy image datastore:"${App_Version}"
+          trivy image --cache-dir /var/lib/trivy-cache datastore:${App_Version}
           echo "-------- Scanning Docker Image Complete --------"
         """
       }
