@@ -6,3 +6,6 @@ stages {
         checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Deepika171256/DataStore.git']])
       }
     }
+}
+}
+
