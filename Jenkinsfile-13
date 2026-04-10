@@ -27,7 +27,7 @@ stages {
 
 stage('SonarQube Analysis') {
     environment {
-        SONAR_TOKEN = credentials('sonar-token')
+        SONAR_TOKEN = credentials('sonar')
     }
     steps {
         withSonarQubeEnv('SonarQube') {
