@@ -49,15 +49,25 @@ stage('SonarQube Analysis') {
         }
     }
 }
-stage("Artifact Store") {
-      steps {
-        sh """
-          echo "-------- Pushing Artifacts To S3 --------"
-          aws s3 cp ./target/*.jar s3://datastore-artefact-store-jenkins-apps/
-          echo "-------- Pushing Artifacts To S3 Completed --------"
-        """
-      }
+stage('Upload to S3') {
+    steps {
+        withCredentials([
+            string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')
+        ]) {
+            sh '''
+                echo "-------- Pushing Artifacts To S3 --------"
+
+                echo "Checking AWS env variables..."
+                env | grep AWS
+
+                aws s3 ls
+
+                aws s3 cp target/datastore-0.0.5.jar s3://datastore-artefact-store-jenkins-apps/
+            '''
+        }
     }
+}
 
 stage("Docker Image Build") {
       steps {
