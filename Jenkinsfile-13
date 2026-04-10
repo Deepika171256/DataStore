@@ -25,6 +25,26 @@ stages {
       }
     }
 
+stage('SonarQube Analysis') {
+    environment {
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh '''
+                echo "-------- Running SonarQube Analysis --------"
+                
+                mvn sonar:sonar \
+                -Dsonar.projectKey=Datastore \
+                -Dsonar.projectName=Datastore \
+                -Dsonar.login=$SONAR_TOKEN
+                
+                echo "-------- SonarQube Analysis Completed --------"
+            '''
+        }
+    }
+}
+
 
 }
 }
