@@ -82,12 +82,12 @@ stage("Docker Image Build") {
 stage("Docker Image Scan") {
       steps {
         sh """
-                  echo "-------- Scanning Docker Image --------"
-                  export TMPDIR=/var/lib/trivy-tmp
-                  mkdir -p /var/lib/trivy-tmp
-                  trivy image --scanners vuln --cache-dir /var/lib/trivy-cache datastore:${params.App_Version}
-                  echo "-------- Scanning Docker Image Complete --------"
-                """
+      echo "-------- Scanning Docker Image --------"
+      export TMPDIR=/home/ec2-user/trivy-tmp
+      mkdir -p /home/ec2-user/trivy-tmp
+      trivy image --scanners vuln datastore:${params.App_Version}
+      echo "-------- Scanning Docker Image Complete --------"
+    """
       }
     }
 
