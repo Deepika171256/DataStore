@@ -92,6 +92,16 @@ stage("Docker Image Scan") {
       }
     }
 
+stage("Docker Image Tag") {
+      steps{
+        sh """
+          echo "-------- Tagging Docker Image --------"
+          docker tag datastore:${App_Version} deepika1725/datastore-backend:${App_Version}
+          echo "-------- Tagging Docker Image Completed."
+        """
+      }
+    }
+
 
 
 
